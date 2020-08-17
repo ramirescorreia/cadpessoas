@@ -1,0 +1,57 @@
+<div class="container-fluid">
+        <div class="row center">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div class="form_main">
+                    <h4 class="heading"><strong>Cadastro de Pessoas - Novo Usuário</strong></h4>
+                    <div class="form">
+                        <form (ngSubmit)="onSubmit(registroForm)" #registroForm="ngForm" novalidate>
+                            <div [ngClass]="validacaoFormularioService.getFormGroupClass(nomeUsuario.valid, nomeUsuario.pristine)">
+                                <label for="nome">Nome:</label>
+                                <input type="text"
+                                    id="nome"
+                                    required
+                                    #nomeUsuario="ngModel"
+                                    [ngClass]="validacaoFormularioService.getFormControlClass(nomeUsuario.valid, nomeUsuario.pristine)"
+                                    placeholder="Nome de usuário"
+                                    class="txt txt-pequeno"
+                                    name="nomeUsuario"
+                                    maxlength="100"
+                                    [(ngModel)]="usuario.nomeUsuario">
+                                <div class="invalid-feedback" [hidden]="nomeUsuario.valid || nomeUsuario.pristine">O campo usuário é obrigatório.</div>
+                            </div>
+                            <div [ngClass]="validacaoFormularioService.getFormGroupClass(password.valid, password.pristine)">
+                                <label for="senha">Senha:</label>
+                                <input type="text"
+                                    id="senha"
+                                    required
+                                    #password="ngModel"
+                                    [ngClass]="validacaoFormularioService.getFormControlClass(password.valid, password.pristine)" 
+                                    placeholder="informe uma senha" 
+                                    class="txt txt-pequeno"
+                                    name="password"
+                                    maxlength="50" 
+                                    [(ngModel)]="usuario.password"/>
+                                <div class="invalid-feedback" [hidden]="password.valid || password.pristine">O campo senha é obrigatória.</div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-sm-3">
+                                    <button type="submit" name="submit" class="submit-button form-control">
+                                        Salvar
+                                    </button>
+                                    <div class="small text-danger" [hidden]="formValid">
+                                        Preencha os campos corretamente.
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <button type="button" (click)="goBack()" class="voltar form-control">Voltar</button>
+                                </div>
+                            </div>
+                            <div class="form-row">    
+                                <dialog-message [mensagem]="mensagemDialog"></dialog-message>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>    

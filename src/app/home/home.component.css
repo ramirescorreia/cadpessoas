@@ -1,0 +1,29 @@
+@import "..\..\styles.css";
+
+img{
+    margin: 20px 15px;
+    cursor: pointer;
+}
+
+img:hover{
+    border-radius: 15px;
+    box-shadow: 0px 0px 5px  #0aa3d1;
+}
+
+.tabela-pessoa .p-datatable table {
+    width: 90%;
+    overflow-wrap: break-word;
+    margin: 0 auto;
+    text-align: center;
+    font-size: small;
+}
+
+#botao-usuario{
+    display: block;
+    margin: 0 auto;
+}
+
+.botoes-grid{
+    margin-left: 15px;
+    cursor: pointer;
+}

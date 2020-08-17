@@ -1,0 +1,131 @@
+<div class="container-fluid">
+    <div class="row center">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="form_main">
+                <h4 class="heading"><strong>Cadastro de Pessoas - Nova Pessoa</strong></h4>
+                <div class="form">
+                    <form (ngSubmit)="onSubmit(pessoaForm)" #pessoaForm="ngForm" novalidate>
+                        <div [ngClass]="validacaoFormularioService.getFormGroupClass(nome.valid, nome.pristine)">
+                            <label for="nome">Nome:</label>
+                            <input type="text"
+                                required
+                                id="nome"
+                                #nome="ngModel"
+                                [ngClass]="validacaoFormularioService.getFormControlClass(nome.valid, nome.pristine)"
+                                placeholder="Nome do Cliente" 
+                                name="nome"
+                                class="txt txt-grande" 
+                                maxlength="200"
+                                [(ngModel)]="pessoa.nome"/>
+                            <div class="invalid-feedback" [hidden]="nome.valid || nome.pristine">O campo nome é obrigatório.</div>
+                        </div>
+                        <div [ngClass]="validacaoFormularioService.getFormGroupClass(cpf.valid, cpf.pristine)">
+                            <label for="cpf">CPF:</label>
+                            <input type="text"
+                                required
+                                id="cpf"
+                                #cpf="ngModel"
+                                [ngClass]="validacaoFormularioService.getFormControlClass(cpf.valid, cpf.pristine)" 
+                                placeholder="CPF do cliente" 
+                                name="cpf"
+                                (blur)="validaCPFComDigitoVerificador($event.currentTarget.value)"
+                                (keyup)="validaCPFComDigitoVerificador($event.currentTarget.value)"
+                                class="txt txt-pequeno"
+                                [(ngModel)]="pessoa.cpf"
+                                maxlength="11">
+                            <div class="invalid-feedback" [hidden]="cpf.valid || cpf.pristine">O campo cpf é obrigatório.</div>
+                            <div class="small text-danger" [hidden]="!cpfInvalido">CPF inválido.</div>
+                        </div>
+                        <div>
+                            <label for="sexo">Sexo:</label>
+                            <select id="sexo" class="txt txt-pequeno" (change)=onChangeSexo($event.target.value)>
+                                <option *ngIf="pessoa.sexo == 'M'" value="0">Selecione</option>
+                                <option *ngIf="pessoa.sexo == 'M'" value="1" selected>Masculino</option>
+                                <option *ngIf="pessoa.sexo == 'M'" value="2">Feminino</option>
+
+                                <option *ngIf="pessoa.sexo == 'F'" value="0">Selecione</option>
+                                <option *ngIf="pessoa.sexo == 'F'" value="1" >Masculino</option>
+                                <option *ngIf="pessoa.sexo == 'F'" value="2" selected>Feminino</option>
+
+                                <option *ngIf="!pessoa.sexo" value="0" selected>Selecione</option>
+                                <option *ngIf="!pessoa.sexo" value="1">Masculino</option>
+                                <option *ngIf="!pessoa.sexo" value="2">Feminino</option>
+                            </select>
+                        </div>
+                        <div [ngClass]="validacaoFormularioService.getFormGroupClass(email.valid, email.pristine)">
+                            <label for="email">E-mail:</label>
+                            <input type="text"
+                                id="email"
+                                #email="ngModel"
+                                [ngClass]="validacaoFormularioService.getFormControlClass(email.valid, email.pristine)" 
+                                placeholder="E-mail" 
+                                name="email"
+                                (blur)="validaEmailRegex($event.currentTarget.value)"
+                                (keyup)="validaEmailRegex($event.currentTarget.value)"
+                                class="txt txt-grande"
+                                [(ngModel)]="pessoa.email"
+                                maxlength="200">
+                            <div class="small text-danger" [hidden]="!emailInvalido">E-mail inválido.</div>
+                        </div>
+                        <div class="input-wrapper">
+                            <label for="data">Data de Nascimento:</label>
+                            <input type="date" 
+                                id="data"
+                                name="data-nascimento"
+                                #dataNascimento="ngModel"
+                                class="txt txt-pequeno"
+                                placeholder="Data de Nascimento"
+                                [ngModel]="pessoa.dataNascimento" 
+                                (ngModelChange)="pessoa.dataNascimento=$event"
+                                [min]="min" 
+                                [max]="max"
+                                maxlength="16"
+                                (blur)="validaDataRegex($event.currentTarget.value)"
+                                (keyup)="validaDataRegex($event.currentTarget.value)"/>
+                        </div>
+                        <div class="small text-danger" *ngIf="dataNascimentoInvalida">Data de Nascimento inválida.</div> 
+                        <div [ngClass]="validacaoFormularioService.getFormGroupClass(naturalidade.valid, naturalidade.pristine)">
+                            <label for="natu">Naturalidade:</label>
+                            <input type="text"
+                                id="natu"
+                                #naturalidade="ngModel"
+                                [ngClass]="validacaoFormularioService.getFormControlClass(naturalidade.valid, naturalidade.pristine)"
+                                placeholder="Naturalidade" 
+                                name="naturalidade"
+                                class="txt txt-grande"
+                                maxlength="200"
+                                [(ngModel)]="pessoa.naturalidade"/>
+                        </div>
+                        <div [ngClass]="validacaoFormularioService.getFormGroupClass(nacionalidade.valid, nacionalidade.pristine)">
+                            <label for="nacio">Nacionalidade:</label>
+                            <input type="text"
+                                id="nacio"
+                                #nacionalidade="ngModel"
+                                [ngClass]="validacaoFormularioService.getFormControlClass(nacionalidade.valid, nacionalidade.pristine)"
+                                placeholder="Nacionalidade" 
+                                name="nacionalidade"
+                                class="txt txt-grande"
+                                maxlength="200"
+                                [(ngModel)]="pessoa.nacionalidade"/>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-sm-3">
+                                <input type="submit" value="Salvar" name="submit" class="submit-button form-control">
+                                <div class="small text-danger" [hidden]="formValid">
+                                    Preencha os campos corretamente.
+                                </div>
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <button type="button" (click)="goBack()" class="voltar form-control">Voltar</button>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-row">    
+                            <dialog-message [mensagem]="mensagemDialog"></dialog-message>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
