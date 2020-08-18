@@ -1,7 +1,9 @@
+import { environment } from 'src/environments/environment';
+
 export class CONSTANTS{
     public static ENDPOINTS = {
-        PESSOA: 'http://localhost:8080/pessoa',
-        LOGIN: 'http://localhost:8080/login',
-        CADASTRO: 'http://localhost:8080/usuario/cadastrar'
+        PESSOA: environment.baseUrl + '/pessoa',
+        LOGIN: environment.baseUrl + '/login',
+        CADASTRO: environment.baseUrl + '/usuario/cadastrar'
     }
 }
